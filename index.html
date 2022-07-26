@@ -53,6 +53,10 @@
             inputDeg.appendChild(option);
           }
         })
+        inputUnis.addEventListener('focus', () => {
+          document.getElementById('datadegree').innerHTML = ''
+          document.getElementById('inputdegree').value = ''
+        })
       })
     </script>
     <div id="myDiv">
