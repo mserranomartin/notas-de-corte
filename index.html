@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css">
+    <title>Notas de corte Madrid</title>
+    <!-- libraries -->
+    <script src="javascript\plotly-2.12.1.min.js"></script>
+    <script src="javascript\danfojs-1.1.1.js"></script>
+    <script defer>
+      dfd.readCSV('https://gist.githubusercontent.com/mserranomartin/a4880b22b934466bb39f1636df05d00c/raw/dce6d8e44eb309c8a33c9c3e1dbc20f1d38b2ace/spain.csv').then(spain => {
+        unilist = spain.University.unique()['$data'];
+        let datalistUnis = document.getElementById('datauniversity');
+        for (k in unilist) {
+          let r = unilist[k]
+          let option = document.createElement('option');
+          option.value = r;
+          option.innerText = r;
+          datalistUnis.appendChild(option);
+        }
+      })
+    </script>
+  </head> 
+  <body>
+    <h1>Evolución de las notas de corte <br> en las universidades públicas españolas</h1>
+    <form>
+      <input list="datauniversity" id="inputuniversity" placeholder="Universidad">
+      <datalist id="datauniversity">
+      </datalist>
+      <input list="datadegree" id="inputdegree" placeholder="Grado">
+      <datalist id="datadegree">
+      </datalist>
+      <button id="evolve"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-arrow-right-circle" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"/>
+      </svg></button>
+    </form>
+    <script>
+      dfd.readCSV('https://gist.githubusercontent.com/mserranomartin/a4880b22b934466bb39f1636df05d00c/raw/dce6d8e44eb309c8a33c9c3e1dbc20f1d38b2ace/spain.csv').then(spain => {
+        let inputUnis = document.getElementById('inputuniversity');
+        inputUnis.addEventListener('blur', event => {
+          let degdf = spain.iloc({
+            rows: spain['University'].eq(inputUnis.value)
+          });
+          let deglist = degdf.Degree.unique()['$data'];
+          let inputDeg = document.getElementById('datadegree');
+          for (k in deglist) {
+            let u = deglist[k]
+            let option = document.createElement('option');
+            option.value = u;
+            option.innerText = u;
+            inputDeg.appendChild(option);
+          }
+        })
+      })
+    </script>
+    <div id="myDiv">
+    </div>
+    <script>
+      document.getElementById('evolve').addEventListener('click', e => {
+        e.preventDefault()
+        dfd.readCSV('https://gist.githubusercontent.com/mserranomartin/a4880b22b934466bb39f1636df05d00c/raw/dce6d8e44eb309c8a33c9c3e1dbc20f1d38b2ace/spain.csv').then(spain => {
+          let degree = document.getElementById('inputdegree').value;
+          let uni = document.getElementById('inputuniversity').value;
+          let df = spain.iloc({
+              rows: spain['University'].eq(uni).and(spain['Degree'].eq(degree)),
+              columns: [0, 5]
+            });
+          df.sortValues("Year", { inplace: true })
+          // plotly 
+          var trace1 = {
+            x: df.Year['$data'],
+            y: df.Cutoff['$data'],
+            type: 'scatter'
+          };
+          var data = [trace1];
+          var layout = {
+            xaxis: {
+              dtick: 1
+            },
+            yaxis: {
+              range: [5, 14]
+            }
+          }
+          Plotly.newPlot('myDiv', data, layout);
+        })
+      })
+    </script>
+  </body>
+</html>

@@ -1,0 +1,37 @@
+body {
+    font-family: Helvetica, Roboto, sans-serif;
+    font-size: 1.1em;
+}
+h1 {
+    margin: auto;
+    display: block;
+    width: fit-content;
+    margin-top: 100px;
+}
+form {
+    width: fit-content;
+    margin: auto;
+    margin-top: 100px;
+}
+input {
+    outline: none;
+    width: 200px;
+    border: none;
+    border-bottom: solid lightgrey;
+    transition: border 200ms;
+}
+input:focus {
+    border-bottom: solid grey;
+}
+input:nth-child(3){
+    width: 400px;
+}
+button {
+    background-color: white;
+    border:none;
+    margin-left: 10px;
+    transition: all 100ms;
+}
+button:hover {
+    transform: scale(1.2);
+}
