@@ -24,7 +24,7 @@ input:focus {
     border-bottom: solid grey;
 }
 input:nth-child(3){
-    width: 400px;
+    width: 400px
 }
 button {
     background-color: white;
@@ -34,4 +34,14 @@ button {
 }
 button:hover {
     transform: scale(1.2);
+}
+a {
+    text-decoration: none;
+}
+p {
+    font-size: 0.8em;
+}
+.wrapper {
+    max-width: 80%;
+    margin: auto;
 }
