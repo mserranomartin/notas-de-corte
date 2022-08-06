@@ -19,6 +19,7 @@ input {
     border: none;
     border-bottom: solid lightgrey;
     transition: border 200ms;
+    margin-right: 10px;
 }
 input:focus {
     border-bottom: solid grey;
@@ -29,7 +30,7 @@ input:nth-child(3){
 button {
     background-color: white;
     border:none;
-    margin-left: 10px;
+    margin-top: 10px;
     transition: all 100ms;
 }
 button:hover {
@@ -44,4 +45,15 @@ p {
 .wrapper {
     max-width: 80%;
     margin: auto;
+}
+
+select {
+    background: none;
+    border: none;
+    border-bottom: solid lightgray;
+    transition: border 100ms;
+}
+
+select:focus {
+    border-bottom: solid grey;
 }
